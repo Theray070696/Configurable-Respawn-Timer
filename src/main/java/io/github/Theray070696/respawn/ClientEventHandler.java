@@ -50,7 +50,7 @@ public class ClientEventHandler
                 // What could go wrong assuming the respawn button is at index 0?
                 this.buttonList.get(0).displayString = I18n.format("deathScreen.respawn") + " in " + String.format("%.2f", this.enableUpdateTimer / 20f) + " seconds";
 
-                if(this.enableUpdateTimer < 0.0f)
+                if(this.enableUpdateTimer <= 0.0f)
                 {
                     shouldRun = false;
                     for(GuiButton guibutton : this.buttonList)
