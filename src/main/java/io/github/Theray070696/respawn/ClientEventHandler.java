@@ -32,29 +32,31 @@ public class ClientEventHandler
     private static class GuiGameOverTimer extends GuiGameOver
     {
         private boolean shouldRun = true;
-        private int enableUpdateTimer;
+        private float enableUpdateTimer;
 
         public GuiGameOverTimer(ITextComponent causeOfDeath)
         {
             super(causeOfDeath);
-            enableUpdateTimer = (RespawnTimer.respawnTimer * 20);
+            enableUpdateTimer = (RespawnTimer.respawnTimer * 20f);
         }
 
-        public void updateScreen()
+        public void drawScreen(int mouseX, int mouseY, float partialTicks)
         {
             if(shouldRun)
             {
-                this.enableUpdateTimer--;
-            }
+                this.enableUpdateTimer -= partialTicks;
 
-            if(this.enableUpdateTimer <= 0)
-            {
-                shouldRun = false;
-                for(GuiButton guibutton : this.buttonList)
+                if(this.enableUpdateTimer <= 0)
                 {
-                    guibutton.enabled = true;
+                    shouldRun = false;
+                    for(GuiButton guibutton : this.buttonList)
+                    {
+                        guibutton.enabled = true;
+                    }
                 }
             }
+
+            super.drawScreen(mouseX, mouseY, partialTicks);
         }
     }
 }

@@ -11,13 +11,13 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
  */
 public class PacketSyncRespawnTimer implements IMessage
 {
-    int timer;
+    float timer;
 
     public PacketSyncRespawnTimer()
     {
     }
 
-    public PacketSyncRespawnTimer(int timer)
+    public PacketSyncRespawnTimer(float timer)
     {
         this.timer = timer;
     }
@@ -25,13 +25,13 @@ public class PacketSyncRespawnTimer implements IMessage
     @Override
     public void fromBytes(ByteBuf buf)
     {
-        this.timer = buf.readInt();
+        this.timer = buf.readFloat();
     }
 
     @Override
     public void toBytes(ByteBuf buf)
     {
-        buf.writeInt(this.timer);
+        buf.writeFloat(this.timer);
     }
 
     public static class Handler implements IMessageHandler<PacketSyncRespawnTimer, IMessage>

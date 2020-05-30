@@ -17,8 +17,8 @@ import net.minecraftforge.fml.relauncher.Side;
 @Mod(modid = "respawntimer", name = "Configurable Respawn Timer", version = "$version")
 public class RespawnTimer
 {
-    public static int respawnTimer;
-    public static int respawnTimerOld;
+    public static float respawnTimer;
+    public static float respawnTimerOld;
 
     public static SimpleNetworkWrapper network;
 
@@ -44,7 +44,7 @@ public class RespawnTimer
 
         config.load();
 
-        respawnTimer = config.getInt("Respawn Timer", "General", 1, 0, 60, "How long the respawn button should be disabled for (in seconds).");
+        respawnTimer = config.getFloat("Respawn Timer", "General", 1f, 0f, 60f, "How long the respawn button should be disabled for (in seconds).");
         respawnTimerOld = respawnTimer;
 
         config.save();
