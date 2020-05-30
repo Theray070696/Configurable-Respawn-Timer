@@ -2,6 +2,7 @@ package io.github.Theray070696.respawn;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiGameOver;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
@@ -46,17 +47,25 @@ public class ClientEventHandler
             {
                 this.enableUpdateTimer -= partialTicks;
 
-                if(this.enableUpdateTimer <= 0)
+                // What could go wrong assuming the respawn button is at index 0?
+                this.buttonList.get(0).displayString = I18n.format("deathScreen.respawn") + " in " + String.format("%.2f", this.enableUpdateTimer / 20f) + " seconds";
+
+                if(this.enableUpdateTimer < 0.0f)
                 {
                     shouldRun = false;
                     for(GuiButton guibutton : this.buttonList)
                     {
                         guibutton.enabled = true;
                     }
+
+                    this.buttonList.get(0).displayString = I18n.format("deathScreen.respawn");
                 }
             }
 
             super.drawScreen(mouseX, mouseY, partialTicks);
         }
+
+        @Override
+        public void updateScreen() { }
     }
 }
