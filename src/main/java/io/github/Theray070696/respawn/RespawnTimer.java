@@ -44,7 +44,7 @@ public class RespawnTimer
 
         config.load();
 
-        respawnTimer = config.getFloat("Respawn Timer", "General", 1f, 0f, 60f, "How long the respawn button should be disabled for (in seconds).");
+        respawnTimer = config.getFloat("Respawn Timer", "General", 1f, 0f, 600f, "How long the respawn button should be disabled for (in seconds).");
         respawnTimerOld = respawnTimer;
 
         config.save();
