@@ -53,6 +53,13 @@ public class ClientEventHandler
                 if(this.enableUpdateTimer <= 0.0f)
                 {
                     shouldRun = false;
+                    
+                    if (RespawnTimer.instantRespawn) {
+                        this.mc.player.respawnPlayer();
+                        this.mc.displayGuiScreen((GuiScreen) null);
+                        return;
+                    }
+                    
                     for(GuiButton guibutton : this.buttonList)
                     {
                         guibutton.enabled = true;
