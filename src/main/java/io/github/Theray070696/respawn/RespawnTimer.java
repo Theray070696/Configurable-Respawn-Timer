@@ -19,6 +19,8 @@ public class RespawnTimer
 {
     public static float respawnTimer;
     public static float respawnTimerOld;
+    
+    public static boolean instantRespawn;
 
     public static SimpleNetworkWrapper network;
 
@@ -46,6 +48,8 @@ public class RespawnTimer
 
         respawnTimer = config.getFloat("Respawn Timer", "General", 1f, 0f, 60f, "How long the respawn button should be disabled for (in seconds).");
         respawnTimerOld = respawnTimer;
+        
+        instantRespawn = config.getBoolean("Respawn Instantly", "General", false, "Whether to respawn instantly once the timer reaches 0.");
 
         config.save();
     }
