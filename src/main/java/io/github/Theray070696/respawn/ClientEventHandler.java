@@ -1,5 +1,6 @@
 package io.github.Theray070696.respawn;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.gui.screen.DeathScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.Widget;
@@ -19,9 +20,13 @@ public class ClientEventHandler
     {
         if(event.getGui() instanceof DeathScreen && !(event.getGui() instanceof GuiGameOverTimer))
         {
-            event.setGui(new GuiGameOverTimer(ObfuscationReflectionHelper.getPrivateValue(DeathScreen.class, (DeathScreen) event.getGui(),
-                    "field_184871_f"), ObfuscationReflectionHelper.getPrivateValue(DeathScreen.class, (DeathScreen) event.getGui(),
-                    "field_213023_c")));
+            if(!((boolean )ObfuscationReflectionHelper.getPrivateValue(DeathScreen.class, (DeathScreen) event.getGui(),
+                    "field_213023_c")))
+            {
+                event.setGui(new GuiGameOverTimer(ObfuscationReflectionHelper.getPrivateValue(DeathScreen.class, (DeathScreen) event.getGui(),
+                        "field_184871_f"), ObfuscationReflectionHelper.getPrivateValue(DeathScreen.class, (DeathScreen) event.getGui(),
+                        "field_213023_c")));
+            }
         }
     }
 
@@ -36,11 +41,11 @@ public class ClientEventHandler
             enableUpdateTimer = (RespawnTimerConfig.respawnTimer.get() * 20d);
         }
 
-        public void tick()
+        public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks)
         {
             if(shouldRun)
             {
-                this.enableUpdateTimer--;
+                this.enableUpdateTimer -= partialTicks;
 
                 // What could go wrong assuming the respawn button is at index 0?
                 this.buttons.get(0).message = new TranslationTextComponent("deathScreen.respawn").append(" in " + String.format("%.2f", this.enableUpdateTimer / 20d) + " seconds");
@@ -49,7 +54,8 @@ public class ClientEventHandler
                 {
                     shouldRun = false;
                     
-                    if (RespawnTimerConfig.instantRespawn.get()) {
+                    if(RespawnTimerConfig.instantRespawn.get())
+                    {
                         this.minecraft.player.respawn();
                         this.minecraft.setScreen((Screen) null);
                         return;
@@ -63,6 +69,11 @@ public class ClientEventHandler
                     this.buttons.get(0).message = new TranslationTextComponent("deathScreen.respawn");
                 }
             }
+
+            super.render(stack, mouseX, mouseY, partialTicks);
         }
+
+        public void tick()
+        {}
     }
 }
